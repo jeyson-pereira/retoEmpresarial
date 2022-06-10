@@ -168,4 +168,35 @@ public class QuestionRouter {
                         .body(BodyInserters.fromPublisher(deleteUseCase.apply(request.pathVariable("id")), Void.class))
         );
     }
+
+    //Testing pagination
+    @Bean
+    @RouterOperation(operation = @Operation(operationId = "getQuestionsPageable", summary = "Find all Questions pageable", tags = {"Pageable questions"},
+            parameters = {@Parameter(in = ParameterIn.PATH, name = "page", description = "Page number")},
+            responses = @ApiResponse(responseCode = "200", description = "successful operation",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = QuestionDTO.class))))))
+    public RouterFunction<ServerResponse> getQuestionsPageable(ListUseCase listUseCase) {
+        return route(
+                GET("/pagination/{page}"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(
+                                listUseCase.getPage(Integer.parseInt(request.pathVariable("page"))),
+                                QuestionDTO.class
+                        ))
+        );
+    }
+
+    @Bean
+    @RouterOperation(operation = @Operation(operationId = "getTotalPages", summary = "Find number of Questions pages", tags = {"Total pages"},
+            responses = @ApiResponse(responseCode = "200", description = "successful operation",
+                    content = @Content(schema = @Schema(implementation = Integer.class)))))
+    public RouterFunction<ServerResponse> getTotalPages(ListUseCase listUseCase) {
+        return route(GET("/getTotalPages"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(listUseCase.getTotalPages(), Integer.class))
+        );
+    }
+
 }

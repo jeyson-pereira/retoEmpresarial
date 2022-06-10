@@ -13,7 +13,7 @@ export class QuestionService {
   }
 
 
-  private url: string = 'http://localhost:8080/';
+  private url: string = 'https://reto-sofka-questions.herokuapp.com/';
 
 
   constructor(private http: HttpClient) {}
@@ -23,7 +23,6 @@ export class QuestionService {
     return this.http.get<QuestionI[]>(direction);
   }
 
-  //TODO: implementar paginación en backend
   getPage(page: number): Observable<QuestionI[]> {
     let direction = this.url + 'pagination/' + page;
     return this.http.get<QuestionI[]>(direction);
@@ -40,7 +39,7 @@ export class QuestionService {
   }
 
   getTotalPages(): Observable<number> {
-    let direction = this.url + 'totalPages';
+    let direction = this.url + 'getTotalPages';
     return this.http.get<number>(direction);
   }
 
