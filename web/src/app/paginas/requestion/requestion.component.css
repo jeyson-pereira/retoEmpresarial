@@ -1,7 +1,4 @@
-.container2{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height:50vh;
+.viewport{
+    height: 300px;
+    width: 600px;
 }
