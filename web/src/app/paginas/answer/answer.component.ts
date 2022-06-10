@@ -16,7 +16,7 @@ import { ServiceService } from 'src/app/Service/service.service';
 })
 export class AnswerComponent implements OnInit {
 
-  
+
   public form: FormGroup = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(10)]],
@@ -41,14 +41,17 @@ export class AnswerComponent implements OnInit {
     position: 0,
   };
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.getUserLogged().subscribe(value => {
+      this.answer.userId = <string>value?.uid
+    });
+  }
 
   openVerticallyCentered(content: any) {
     this.modalService.open(content, { centered: true });
   }
 
   saveAnswer(): void {
-    this.answer.userId = this.item.userId;
     this.answer.questionId = this.item.id;
     this.services.saveAnswer(this.answer).subscribe({
       next: (v) => {
@@ -57,12 +60,12 @@ export class AnswerComponent implements OnInit {
           this.messageService.add({
             severity: 'success',
             summary: 'Se ha agregado la respuesta',
-            
+
            });
            setTimeout(() => {
            window.location.reload();
          }, 1000);
-        }        
+        }
       },
       error: (e) =>
       this.messageService.add({

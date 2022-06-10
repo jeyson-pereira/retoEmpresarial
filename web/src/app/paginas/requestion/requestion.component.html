@@ -32,7 +32,7 @@
         <div
           class="accordion"
           id="accordionExample"
-          *cdkVirtualFor="let questions of answers"
+          *cdkVirtualFor="let answer of answers"
         >
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
@@ -45,7 +45,7 @@
                 aria-controls="collapseOne"
               >
                 <h5 class="text-center">Respuesta:</h5>
-                <p-rating
+                <!--<p-rating
                   [cancel]="false"
                   [(ngModel)]="questions.position"
                   [disabled]="true"
@@ -56,7 +56,7 @@
                   [(ngModel)]="questions.position"
                   [disabled]="false"
                   *ngIf="authService.userData"
-                ></p-rating>
+                ></p-rating>-->
                 <!-- Respuesta -->
               </button>
             </h2>
@@ -66,9 +66,15 @@
               aria-labelledby="headingOne"
               data-bs-parent="#accordionExample"
             >
-              <p>{{ questions.answer }}</p>
+              <p>{{ answer.answer }}</p>
               <div class="accordion-body">
-                <strong></strong>
+                <strong>
+                  <div class="acordion-button" *ngIf="answer.userId === uid">
+                    <div style="text-align: center;">
+                      Editar tu respuesta
+                    </div>
+                  </div>
+                </strong>
               </div>
             </div>
           </div>

@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./requestion.component.css'],
 })
 export class RequestionComponent implements OnInit {
+  userLogged = this.authService.getUserLogged();
+  uid: any;
+
   question: QuestionI | undefined;
   answers: AnswerI[] | undefined;
   answersNew: AnswerI[] = [];
@@ -46,6 +49,9 @@ export class RequestionComponent implements OnInit {
   }
 
   getQuestions(id: string): void {
+    this.userLogged.subscribe(value =>{
+      this.uid=value?.uid
+    });
     this.questionService.getQuestion(id).subscribe((data) => {
       this.question = data;
       this.answers = data.answers;
