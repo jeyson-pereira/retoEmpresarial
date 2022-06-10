@@ -69,6 +69,11 @@ export class ServiceService {
     return this.afauth.authState;
   }
 
+  SignOut() {
+    return this.afauth.signOut().then(() => {
+      this.router.navigate(['login']);
+    });
+  }
 
   SetUserData(user: any) {
     const userRef: AngularFirestoreDocument<any> = this.store.doc(
