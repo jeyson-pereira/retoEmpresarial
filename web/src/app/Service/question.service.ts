@@ -23,7 +23,6 @@ export class QuestionService {
     return this.http.get<QuestionI[]>(direction);
   }
 
-  //TODO: implementar paginación en backend
   getPage(page: number): Observable<QuestionI[]> {
     let direction = this.url + 'pagination/' + page;
     return this.http.get<QuestionI[]>(direction);
