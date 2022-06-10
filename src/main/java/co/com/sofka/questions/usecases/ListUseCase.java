@@ -40,4 +40,8 @@ public class ListUseCase implements Supplier<Flux<QuestionDTO>> {
                 .map(count -> (int) Math.ceil(count / 10.0));
     }
 
+    public Mono<Long> getTotalQuestions() {
+       return questionRepository.findAll().count();
+    }
+
 }

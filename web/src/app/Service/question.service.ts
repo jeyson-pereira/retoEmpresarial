@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { QuestionI } from '../models/question-i';
 import { AnswerI } from '../models/answer-i';
+import {environment} from "../../environments/environment";
 @Injectable({
   providedIn: 'root',
 })
@@ -13,7 +14,7 @@ export class QuestionService {
   }
 
 
-  private url: string = 'https://reto-sofka-questions.herokuapp.com/';
+  private url: string = environment.apiUrl;
 
 
   constructor(private http: HttpClient) {}

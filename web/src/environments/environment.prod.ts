@@ -7,6 +7,6 @@ export const environment = {
     storageBucket: "reto-sofka-questions.appspot.com",
     messagingSenderId: "1012633543738",
     appId: "1:1012633543738:web:d5fdeca1230986da018103"
-  }
-
+  },
+  apiUrl: 'https://reto-sofka-questions.herokuapp.com/'
 };

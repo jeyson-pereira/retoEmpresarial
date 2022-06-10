@@ -226,4 +226,17 @@ public class QuestionRouter {
         );
     }
 
+    @Bean
+    @RouterOperation(operation = @Operation(operationId = "getCountQuestions", summary = "Find number of Questions", tags = {"Number of total questions"},
+            responses = @ApiResponse(responseCode = "200", description = "successful operation",
+                    content = @Content(schema = @Schema(implementation = Long.class)))))
+    public RouterFunction<ServerResponse> getCountQuestions(ListUseCase listUseCase) {
+        return route(GET("/countQuestions"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(listUseCase.getTotalQuestions(), Long.class))
+        );
+    }
+
+
 }
