@@ -84,6 +84,31 @@ public class QuestionRouter {
         );
     }
 
+    ////
+
+    @Bean
+    @RouterOperation(operation = @Operation(operationId = "update", summary = "create new Question", tags = {"new Question"},
+            requestBody = @RequestBody(required = true, description = "Enter Request body as Json Object",
+                    content = @Content(schema = @Schema(implementation = QuestionDTO.class))),
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation return question id", content = @Content(schema = @Schema(implementation = String.class))),
+                    @ApiResponse(responseCode = "400", description = "Bad Request"),
+                    @ApiResponse(responseCode = "404", description = "Server not found")}))
+    public RouterFunction<ServerResponse> update(UpdateUseCase updateUseCase) {
+        Function<QuestionDTO, Mono<ServerResponse>> executor = questionDTO -> updateUseCase.apply(questionDTO)
+                .flatMap(result -> ServerResponse.ok()
+                        .contentType(MediaType.TEXT_PLAIN)
+                        .bodyValue(result));
+
+        return route(
+                PUT("/update").and(accept(MediaType.APPLICATION_JSON)),
+                request -> request.bodyToMono(QuestionDTO.class).flatMap(executor)
+        );
+    }
+
+
+    ///
+
     @Bean
     @RouterOperation(operation = @Operation(operationId = "get", summary = "Get question by Id", tags = {"Questions by Id"},
             parameters = {@Parameter(in = ParameterIn.PATH, name = "id", description = "Question Id")},

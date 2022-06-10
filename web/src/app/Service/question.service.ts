@@ -13,7 +13,7 @@ export class QuestionService {
   }
 
 
-  private url: string = 'https://reto-sofka-questions.herokuapp.com/';
+  private url: string = 'http://localhost:8080/';
 
 
   constructor(private http: HttpClient) {}
@@ -63,6 +63,6 @@ export class QuestionService {
 
   editQuestion(question: QuestionI): Observable<any> {
     let direction = this.url + 'update';
-    return this.http.post<any>(direction, question);
+    return this.http.put<any>(direction, question);
   }
 }
