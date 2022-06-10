@@ -6,7 +6,6 @@ import co.com.sofka.questions.usecases.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.extensions.Extension;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,6 +30,13 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 public class QuestionRouter {
 
 
+    /**
+     * A router function that returns a list of all questions.
+     *
+     * @param listUseCase The use case that will be called when the endpoint is called.
+     * @return A RouterFunction that routes GET requests to "/getAll" to a handler that returns a 200 OK response with a
+     * list of Questions in the body.
+     */
     @Bean
     @RouterOperation(operation = @Operation(operationId = "getAllQuestions", summary = "Find all Questions", tags = {"Questions"},
             responses = {@ApiResponse(responseCode = "200", description = "successful operation",
@@ -45,6 +51,12 @@ public class QuestionRouter {
         );
     }
 
+    /**
+     * A router function that returns a list of questions by userId.
+     *
+     * @param ownerListUseCase This is the use case that will be executed when the route is called.
+     * @return A RouterFunction that routes requests to the getOwnerAll method.
+     */
     @Bean
     @RouterOperation(operation = @Operation(operationId = "getOwnerAll", summary = "Find Question By userId", tags = {"Questions by UserId"},
             parameters = {@Parameter(in = ParameterIn.PATH, name = "id", description = "User Id")},
@@ -64,6 +76,12 @@ public class QuestionRouter {
         );
     }
 
+    /**
+     * It creates a new question.
+     *
+     * @param createUseCase This is the use case that will be executed when the endpoint is called.
+     * @return RouterFunction<ServerResponse>
+     */
     @Bean
     @RouterOperation(operation = @Operation(operationId = "create", summary = "create new Question", tags = {"new Question"},
             requestBody = @RequestBody(required = true, description = "Enter Request body as Json Object",
@@ -84,10 +102,14 @@ public class QuestionRouter {
         );
     }
 
-    ////
-
+    /**
+     * It updates a question.
+     *
+     * @param updateUseCase This is the use case that will be executed when the endpoint is called.
+     * @return RouterFunction<ServerResponse>
+     */
     @Bean
-    @RouterOperation(operation = @Operation(operationId = "update", summary = "create new Question", tags = {"new Question"},
+    @RouterOperation(operation = @Operation(operationId = "update", summary = "create new Question", tags = {"Update Question"},
             requestBody = @RequestBody(required = true, description = "Enter Request body as Json Object",
                     content = @Content(schema = @Schema(implementation = QuestionDTO.class))),
             responses = {
@@ -106,8 +128,12 @@ public class QuestionRouter {
         );
     }
 
-
-    ///
+    /**
+     * A router function that returns a question by id.
+     *
+     * @param getUseCase The use case that will be executed when the endpoint is called.
+     * @return A RouterFunction that routes to a handler function that returns a ServerResponse.
+     */
 
     @Bean
     @RouterOperation(operation = @Operation(operationId = "get", summary = "Get question by Id", tags = {"Questions by Id"},
@@ -127,6 +153,12 @@ public class QuestionRouter {
         );
     }
 
+    /**
+     * It adds an answer to a question.
+     *
+     * @param addAnswerUseCase This is the use case that will be executed when the endpoint is called.
+     * @return A RouterFunction that routes to a handler function that adds an answer to a question.
+     */
     @Bean
     @RouterOperation(operation = @Operation(operationId = "addAnswer", summary = "Add answer", tags = {"Add Answer"},
             requestBody = @RequestBody(required = true, description = "Enter Request body as Json Object",
@@ -144,6 +176,12 @@ public class QuestionRouter {
         );
     }
 
+    /**
+     * It deletes a question by id.
+     *
+     * @param deleteUseCase This is the use case that will be executed when the endpoint is called.
+     * @return RouterFunction<ServerResponse>
+     */
     @Bean
     @RouterOperation(operation = @Operation(operationId = "delete", summary = "Delete question by Id", tags = {"Delete Question by Id"},
             parameters = {@Parameter(in = ParameterIn.PATH, name = "id", description = "Question Id")},
@@ -157,4 +195,35 @@ public class QuestionRouter {
                         .body(BodyInserters.fromPublisher(deleteUseCase.apply(request.pathVariable("id")), Void.class))
         );
     }
+
+    //Testing pagination
+    @Bean
+    @RouterOperation(operation = @Operation(operationId = "getQuestionsPageable", summary = "Find all Questions pageable", tags = {"Pageable questions"},
+            parameters = {@Parameter(in = ParameterIn.PATH, name = "page", description = "Page number")},
+            responses = @ApiResponse(responseCode = "200", description = "successful operation",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = QuestionDTO.class))))))
+    public RouterFunction<ServerResponse> getQuestionsPageable(ListUseCase listUseCase) {
+        return route(
+                GET("/pagination/{page}"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(
+                                listUseCase.getPage(Integer.parseInt(request.pathVariable("page"))),
+                                QuestionDTO.class
+                        ))
+        );
+    }
+
+    @Bean
+    @RouterOperation(operation = @Operation(operationId = "getTotalPages", summary = "Find number of Questions pages", tags = {"Total pages"},
+            responses = @ApiResponse(responseCode = "200", description = "successful operation",
+                    content = @Content(schema = @Schema(implementation = Integer.class)))))
+    public RouterFunction<ServerResponse> getTotalPages(ListUseCase listUseCase) {
+        return route(GET("/getTotalPages"),
+                request -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(listUseCase.getTotalPages(), Integer.class))
+        );
+    }
+
 }
