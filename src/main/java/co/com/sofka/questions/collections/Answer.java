@@ -14,7 +14,7 @@ public class Answer {
     private String answer;
     private Integer position;
 
-    private String asnweredAt;
+    private String answeredAt;
 
     public Integer getPosition() {
         return position;
@@ -56,11 +56,11 @@ public class Answer {
         this.answer = answer;
     }
 
-    public String getAsnweredAt() {
-        return asnweredAt;
+    public String getAnsweredAt() {
+        return answeredAt;
     }
 
-    public void setAsnweredAt(String asnweredAt) {
-        this.asnweredAt = asnweredAt;
+    public void setAnsweredAt(String answeredAt) {
+        this.answeredAt = answeredAt;
     }
 }

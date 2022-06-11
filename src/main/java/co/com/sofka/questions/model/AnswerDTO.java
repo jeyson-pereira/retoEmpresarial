@@ -17,19 +17,19 @@ public class AnswerDTO {
 
     private Integer position;
 
-    private String asnweredAt;
+    private String answeredAt;
 
 
     public AnswerDTO() {
 
     }
 
-    public AnswerDTO(String id, String userId, String questionId, String answer, String asnweredAt) {
+    public AnswerDTO(String id, String userId, String questionId, String answer, String answeredAt) {
         this.id = id;
         this.userId = userId;
         this.questionId = questionId;
         this.answer = answer;
-        this.asnweredAt = asnweredAt;
+        this.answeredAt = answeredAt;
     }
 
     public String getId() {
@@ -72,12 +72,12 @@ public class AnswerDTO {
         this.position = position;
     }
 
-    public String getAsnweredAt() {
-        return asnweredAt;
+    public String getAnsweredAt() {
+        return answeredAt;
     }
 
-    public void setAsnweredAt(String asnweredAt) {
-        this.asnweredAt = asnweredAt;
+    public void setAnsweredAt(String answeredAt) {
+        this.answeredAt = answeredAt;
     }
 
     @Override
@@ -101,6 +101,7 @@ public class AnswerDTO {
                 ", questionId='" + questionId + '\'' +
                 ", answer='" + answer + '\'' +
                 ", position=" + position +
+                ", answeredAt='" + answeredAt + '\'' +
                 '}';
     }
 }
