@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<div class="container">
+<div class="container mt-5">
   <div class="row">
     <div class="col-2">
       <div class="card text-center">
@@ -66,12 +66,13 @@
               aria-labelledby="headingOne"
               data-bs-parent="#accordionExample"
             >
-              <p>{{ answer.answer }}</p>
+              <p class="m-2">{{ answer.answer }}</p>
               <div class="accordion-body">
                 <strong>
                   <div class="acordion-button" *ngIf="answer.userId === uid">
                     <div style="text-align: center;">
-                      Editar tu respuesta
+                      <p>Fecha de respuesta: {{answer.asnweredAt}}</p>
+                      <app-edit-answer [oldAnswer]="answer"></app-edit-answer>
                     </div>
                   </div>
                 </strong>
@@ -84,7 +85,7 @@
   </div>
 </div>
 
-<div class="container2">
+<div class="container text-center m-5">
   <button
     type="button"
     (click)="preguntasHome()"
