@@ -3,6 +3,8 @@ package co.com.sofka.questions.collections;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @Document
 public class Answer {
     @Id
@@ -11,6 +13,8 @@ public class Answer {
     private String questionId;
     private String answer;
     private Integer position;
+
+    private String asnweredAt;
 
     public Integer getPosition() {
         return position;
@@ -50,5 +54,13 @@ public class Answer {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public String getAsnweredAt() {
+        return asnweredAt;
+    }
+
+    public void setAsnweredAt(String asnweredAt) {
+        this.asnweredAt = asnweredAt;
     }
 }

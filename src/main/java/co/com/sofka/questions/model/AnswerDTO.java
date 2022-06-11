@@ -2,6 +2,7 @@ package co.com.sofka.questions.model;
 
 
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -16,16 +17,19 @@ public class AnswerDTO {
 
     private Integer position;
 
+    private String asnweredAt;
+
 
     public AnswerDTO() {
 
     }
 
-    public AnswerDTO(String id, String userId, String questionId, String answer) {
+    public AnswerDTO(String id, String userId, String questionId, String answer, String asnweredAt) {
         this.id = id;
         this.userId = userId;
         this.questionId = questionId;
         this.answer = answer;
+        this.asnweredAt = asnweredAt;
     }
 
     public String getId() {
@@ -66,6 +70,14 @@ public class AnswerDTO {
 
     public void setPosition(Integer position) {
         this.position = position;
+    }
+
+    public String getAsnweredAt() {
+        return asnweredAt;
+    }
+
+    public void setAsnweredAt(String asnweredAt) {
+        this.asnweredAt = asnweredAt;
     }
 
     @Override
