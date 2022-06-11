@@ -23,6 +23,7 @@ import { RequestionComponent } from './paginas/requestion/requestion.component';
 import { EditComponent } from './paginas/edit/edit.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { EditAnswerComponent } from './paginas/edit-answer/edit-answer.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 
@@ -51,6 +52,7 @@ import { EditAnswerComponent } from './paginas/edit-answer/edit-answer.component
     NgbModule,
     ScrollingModule,
     FormsModule,
+    InfiniteScrollModule,
     ToastrModule.forRoot()
     
    

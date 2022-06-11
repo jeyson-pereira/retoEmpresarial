@@ -10,6 +10,7 @@ import { ServiceService } from '../Service/service.service';
 export class NavbarComponent implements OnInit {
   userLogged = this.authService.getUserLogged();
   disabled: boolean = false;
+  emailCurrentUser: string = "";
 
   constructor(private authService: ServiceService, private route: Router) {}
 
@@ -23,6 +24,7 @@ export class NavbarComponent implements OnInit {
         this.disabled = true;
       } else {
         this.disabled = false;
+        this.emailCurrentUser = value.email;
       }
     });
   }

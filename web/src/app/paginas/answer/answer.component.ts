@@ -40,7 +40,7 @@ export class AnswerComponent implements OnInit {
     questionId: '',
     answer: '',
     position: 0,
-    asnweredAt: '',
+    answeredAt: '',
   };
 
   ngOnInit(): void {

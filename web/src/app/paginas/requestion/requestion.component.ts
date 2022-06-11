@@ -18,11 +18,13 @@ export class RequestionComponent implements OnInit {
   question: QuestionI | undefined;
   answers: AnswerI[] | undefined;
   answersNew: AnswerI[] = [];
+  answers2: AnswerI[] = [];
   currentAnswer: number = 0;
 
   questions: QuestionI[] | undefined;
 
   page: number = 0;
+  contador: number = 3;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,6 +47,8 @@ export class RequestionComponent implements OnInit {
 
     this.service.getAnswer(id).subscribe((data) => {
       this.answers = data.answers;
+      this.answersNew = data.answers;
+      this.carga();
     });
   }
 
@@ -66,7 +70,23 @@ export class RequestionComponent implements OnInit {
 
   onScroll() {}
 
+  onScrollDown(e:any) {
+    this.carga();
+  }
+  onScrollUp(e:any) {}
+
   preguntasHome() {
     this.router.navigate(['preguntas']);
+  }
+
+  carga() {
+    for (let i = this.page; i < this.contador; i++) {
+      if(i >= this.answersNew.length){
+        break;
+      }
+      this.answers2.push(this.answersNew[i]);
+    }
+    this.contador += 3;
+    this.page += 3;
   }
 }

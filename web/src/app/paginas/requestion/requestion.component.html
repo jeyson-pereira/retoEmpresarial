@@ -28,11 +28,17 @@
       </div>
     </div>
     <div class="col-5">
-      <cdk-virtual-scroll-viewport itemSize="100" class="viewport">
+      <div
+        class="search-results"
+        infinite-scroll
+        [scrollWindow]="false"
+        (scrolled)="onScrollDown($event)"
+        (scrolledUp)="onScrollUp($event)"
+      >
         <div
           class="accordion"
           id="accordionExample"
-          *cdkVirtualFor="let answer of answers"
+          *ngFor="let answer of answers2"
         >
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
@@ -69,9 +75,9 @@
               <p class="m-2">{{ answer.answer }}</p>
               <div class="accordion-body">
                 <strong>
+                  <p class="text-center">Fecha de respuesta: {{ answer.answeredAt }}</p>
                   <div class="acordion-button" *ngIf="answer.userId === uid">
-                    <div style="text-align: center;">
-                      <p>Fecha de respuesta: {{answer.asnweredAt}}</p>
+                    <div style="text-align: center">
                       <app-edit-answer [oldAnswer]="answer"></app-edit-answer>
                     </div>
                   </div>
@@ -80,7 +86,7 @@
             </div>
           </div>
         </div>
-      </cdk-virtual-scroll-viewport>
+      </div>
     </div>
   </div>
 </div>
