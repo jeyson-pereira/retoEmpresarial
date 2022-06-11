@@ -4,7 +4,7 @@
     <div class="container">
       <div class="card text-center">
         <div class="card-header fs-4 font1">
-          <b>Envia tu respuesta</b>
+          <b>Actualiza tu respuesta</b>
         </div>
         <div class="card-body p-4">
           <div class="form-floating">
@@ -21,10 +21,10 @@
           <br />
           <button
             pButton
-            (click)="saveAnswer()"
+            (click)="editAnswer(answer)"
             pRipple
             type="button"
-            label="Enviar respuesta"
+            label="Actualizar respuesta"
             class="p-button-outlined p-button-info"
           ></button>
         </div>
@@ -44,18 +44,9 @@
   </div>
 </ng-template>
 <button
-  pButton
-  pRipple
-  type="button"
-  disabled="true"
-  label="Inicia Sesión Antes de Responder"
-  class="p-button-outlined p-button-danger"
-  *ngIf="!authService.userData"
-></button>
-<button
-  class="btn btn-outline-primary mb-2 me-2"
+  class="btn btn-outline-primary"
   (click)="openVerticallyCentered(content)"
   *ngIf="authService.userData"
 >
-  Contestar a esta pregunta
+  Editar
 </button>

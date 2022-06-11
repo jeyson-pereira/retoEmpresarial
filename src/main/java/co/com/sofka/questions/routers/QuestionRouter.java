@@ -109,7 +109,7 @@ public class QuestionRouter {
      * @return RouterFunction<ServerResponse>
      */
     @Bean
-    @RouterOperation(operation = @Operation(operationId = "update", summary = "create new Question", tags = {"Update Question"},
+    @RouterOperation(operation = @Operation(operationId = "update", summary = "Update Question", tags = {"Update Question"},
             requestBody = @RequestBody(required = true, description = "Enter Request body as Json Object",
                     content = @Content(schema = @Schema(implementation = QuestionDTO.class))),
             responses = {
@@ -173,6 +173,26 @@ public class QuestionRouter {
                                         .contentType(MediaType.APPLICATION_JSON)
                                         .bodyValue(result))
                         )
+        );
+    }
+
+    @Bean
+    @RouterOperation(operation = @Operation(operationId = "updateAnswer", summary = "Update Answer of Question", tags = {"Update Answer"},
+            requestBody = @RequestBody(required = true, description = "Enter Request body as Json Object",
+                    content = @Content(schema = @Schema(implementation = AnswerDTO.class))),
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "successful operation return question id", content = @Content(schema = @Schema(implementation = String.class))),
+                    @ApiResponse(responseCode = "400", description = "Bad Request"),
+                    @ApiResponse(responseCode = "404", description = "Server not found")}))
+    public RouterFunction<ServerResponse> updateAsnwer(AddAnswerUseCase addAnswerUseCase) {
+        Function<AnswerDTO, Mono<ServerResponse>> executor = AnswerDTO -> addAnswerUseCase.editAnswer(AnswerDTO)
+                .flatMap(result -> ServerResponse.ok()
+                        .contentType(MediaType.TEXT_PLAIN)
+                        .bodyValue(result));
+
+        return route(
+                PUT("/updateAnswer").and(accept(MediaType.APPLICATION_JSON)),
+                request -> request.bodyToMono(AnswerDTO.class).flatMap(executor)
         );
     }
 
